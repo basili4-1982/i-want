@@ -99,6 +99,7 @@ func (c *APIClient) Login(username, password string) error {
 func (c *APIClient) CreateWishlist(data map[string]interface{}) (string, error) {
 	resp, err := c.client.R().
 		SetBody(data).
+		SetAuthToken(c.token).
 		Post("/api/wishlists")
 
 	if err != nil {
@@ -118,6 +119,7 @@ func (c *APIClient) CreateWishlist(data map[string]interface{}) (string, error) 
 func (c *APIClient) AddWishlistItem(wishlistID string, data map[string]interface{}) (string, error) {
 	resp, err := c.client.R().
 		SetBody(data).
+		SetAuthToken(c.token).
 		Post(fmt.Sprintf("/api/wishlists/%s/items", wishlistID))
 
 	if err != nil {
@@ -134,18 +136,8 @@ func (c *APIClient) AddWishlistItem(wishlistID string, data map[string]interface
 	return result.ID, nil
 }
 
-func (c *APIClient) ShareWishlist(wishlistID, userID string, canEdit bool) error {
-	_, err := c.client.R().
-		SetBody(map[string]interface{}{
-			"shared_user_id": userID,
-			"can_edit":       canEdit,
-		}).
-		Post(fmt.Sprintf("/api/wishlists/%s/share", wishlistID))
-
-	return err
-}
-
 func main() {
+	// Инициализация генератора случайных цифр
 	rand.NewSource(time.Now().UnixNano())
 
 	// 1. Инициализация клиента
@@ -199,6 +191,6 @@ func main() {
 		"items":    strings.Join(itemsList, ", "),
 	})
 
-	fmt.Println("\n=== Generated summary ===")
+	fmt.Println("\n=== Added Wishlist item ===")
 	fmt.Println(result)
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"strings"
 	"sync"
 	"time"
 
@@ -91,6 +92,8 @@ func authMiddleware(c *gin.Context) {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}
+
+	token = strings.Split(token, " ")[1]
 
 	// В реальном приложении здесь должна быть проверка JWT токена
 	// Для упрощения просто проверяем, что пользователь существует
