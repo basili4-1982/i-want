@@ -1,0 +1,75 @@
+    # curl -X POST http://localhost:8080/auth/register
+#  -H "Content-Type: application/json"
+#  -d '{"username":"user1", "email":"user1@example.com", "password":"password123"}'
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "username": "user1",
+  "email": "user1@example.com",
+  "password": "password123"
+}
+
+###
+
+# curl -X POST http://localhost:8080/auth/login
+#  -H "Content-Type: application/json"
+#  -d '{"username":"user1", "password":"password123"}'
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "username": "user1",
+  "password": "password123"
+}
+
+###
+
+# curl -X POST http://localhost:8080/api/wishlists
+#  -H "Content-Type: application/json"
+#  -H "Authorization: $TOKEN"
+#  -d '{"title":"Мой список желаний", "description":"Что я хочу на день рождения"}'
+POST http://localhost:8080/api/wishlists
+Authorization: 4fae8e56-99b1-4c95-8cc6-bda5c3c323f6
+Content-Type: application/json
+
+{
+  "title": "Мой список желаний",
+  "description": "Что я хочу на день рождения"
+}
+
+###
+
+# curl -X GET http://localhost:8080/api/wishlists
+#  -H "Authorization: $TOKEN"
+GET http://localhost:8080/api/wishlists
+Authorization: 4fae8e56-99b1-4c95-8cc6-bda5c3c323f6
+
+###
+
+# curl -X POST http://localhost:8080/api/wishlists/$WISHLIST_ID/items
+#  -H "Content-Type: application/json"
+#  -H "Authorization: $TOKEN"
+#  -d '{"name":"Новый iPhone", "description":"Последняя модель", "price":"999.99", "link":"https://apple.com/iphone"}'
+POST http://localhost:8080/api/wishlists/3ad2d796-b964-4c2f-8cfc-8cf7d1180ebe/items
+Authorization: 4fae8e56-99b1-4c95-8cc6-bda5c3c323f6
+Content-Type: application/json
+
+{
+  "name": "Новый iPhone",
+  "description": "Последняя модель",
+  "price": "999.99",
+  "link": "https://apple.com/iphone"
+}
+
+###
+
+# curl -X GET http://localhost:8080/api/wishlists/$WISHLIST_ID/items
+#  -H "Authorization: $TOKEN"
+GET http://localhost:8080/api/wishlists/3ad2d796-b964-4c2f-8cfc-8cf7d1180ebe/items
+Authorization: 4fae8e56-99b1-4c95-8cc6-bda5c3c323f6
+
+###
+
+
+
