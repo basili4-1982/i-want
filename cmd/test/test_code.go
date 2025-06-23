@@ -136,6 +136,24 @@ func (c *APIClient) AddWishlistItem(wishlistID string, data map[string]interface
 	return result.ID, nil
 }
 
+func (c *APIClient) ShareWishlist(wishlistID string, user2Id string, canEdit bool) (string, error) {
+	data := map[string]interface{}{
+		"can_edit":       canEdit,
+		"shared_user_id": user2Id,
+	}
+
+	resp, err := c.client.R().
+		SetBody(data).
+		SetAuthToken(c.token).
+		Post(fmt.Sprintf("api/wishlists/%s/share", wishlistID))
+
+	if err != nil {
+		return "", err
+	}
+
+	return string(resp.Body()), nil
+}
+
 func main() {
 	// Инициализация генератора случайных цифр
 	rand.NewSource(time.Now().UnixNano())
@@ -192,5 +210,22 @@ func main() {
 	})
 
 	fmt.Println("\n=== Added Wishlist item ===")
+	fmt.Println(result)
+
+	//регаем второго пользователя
+	userData2 := generateUserData()
+	user2ID, err := api.Register(userData2)
+	if err != nil {
+		log.Fatalf("Registration failed: %v", err)
+	}
+	fmt.Printf("Registered user: %s (%s)\n", userData2["username"], userID)
+
+	result, err = api.ShareWishlist(wishlistID, user2ID, false)
+	if err != nil {
+		log.Printf("Failed share wishlist: %v", err)
+		return
+	}
+
+	fmt.Println("\n=== Share Wishlist ===")
 	fmt.Println(result)
 }

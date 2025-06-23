@@ -68,7 +68,7 @@ curl -X POST http://localhost:8080/api/wishlists/$WISHLIST_ID/items \
 ### 8. Получение всех элементов списка
 
 ```bash
-curl -X GET http://localhost:8080/api/wishlists/$WISHLIST_ID/items \
+   curl -X GET http://localhost:8080/api/wishlists/$WISHLIST_ID/items \
   -H "Authorization: $TOKEN"
 ```
 
